@@ -13,7 +13,18 @@ def filter_email(email):
         if c == '+': break
         elif c == '.': continue
         filtered += c
-    return filtered + email[at_index:]
+    # check for valid email format
+    address = email[at_index + 1:]
+    # if address has no dot, return empty string
+    if '.' not in address: return ''
+    # get dot index
+    last_dot_index = address.rindex('.')
+    # back word of dot should not be empty
+    backword = address[last_dot_index + 1:]
+    # return empty string if one of it is empty
+    if not backword: return ''
+    # now everything filtered, return original email
+    return filtered + '@' + address
 
 
 @app.route('/', methods=['GET', 'POST'])
