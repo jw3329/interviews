@@ -4,7 +4,8 @@ app = Flask(__name__)
 
 
 def filter_email(email):
-    # assumming it is gmail as always
+    # if at is not a valid email, return empty string
+    if '@' not in email: return ''
     at_index = email.index('@')
     front_at = email[:at_index]
     filtered = ''
@@ -20,7 +21,10 @@ def home():
     if request.method == 'GET':
         return 'Post method needs to send data'
     elif request.method == 'POST':
-        email_list = request.get_json()['email_list']
+        json_data = request.get_json()
+        if 'email_list' not in json_data:
+            return 'email_list is not in the given request'
+        email_list = json_data['email_list']
         email_set = set()
         for email in email_list:
             unique_username = filter_email(email)
