@@ -38,6 +38,8 @@ def home():
         email_list = json_data['email_list']
         email_set = set()
         for email in email_list:
+            # trim each space of email
+            email = email.strip()
             filtered_email = filter_email(email)
             # skip the addition if it is not a vaild email format
             if filtered_email: email_set.add(filtered_email)
