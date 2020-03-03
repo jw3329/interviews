@@ -13,7 +13,7 @@ def filter_email(email):
         if c == '+': break
         elif c == '.': continue
         filtered += c
-    return filtered
+    return filtered + email[at_index:]
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -27,9 +27,9 @@ def home():
         email_list = json_data['email_list']
         email_set = set()
         for email in email_list:
-            unique_username = filter_email(email)
+            filtered_email = filter_email(email)
             # skip the addition if it is not a vaild email format
-            if unique_username: email_set.add(unique_username)
+            if filtered_email: email_set.add(filtered_email)
         return str(len(email_set))
 
 
